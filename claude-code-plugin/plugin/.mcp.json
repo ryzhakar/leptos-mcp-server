@@ -1,0 +1,5 @@
+{
+  "leptos": {
+    "command": "/ABSOLUTE/PATH/TO/leptos-mcp-server/target/release/leptos-mcp-server"
+  }
+}

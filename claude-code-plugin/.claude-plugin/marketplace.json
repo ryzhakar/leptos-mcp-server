@@ -1,0 +1,21 @@
+{
+  "name": "leptos-mcp-server",
+  "description": "Leptos MCP server for Claude Code",
+  "owner": {
+    "name": "kneiht",
+    "url": "https://github.com/kneiht/leptos-mcp-server"
+  },
+  "plugins": [
+    {
+      "name": "leptos-mcp",
+      "description": "Leptos documentation and code analysis tools via MCP",
+      "version": "1.0.0",
+      "author": {
+        "name": "kneiht",
+        "url": "https://github.com/kneiht/leptos-mcp-server"
+      },
+      "source": "./plugin",
+      "category": "development"
+    }
+  ]
+}

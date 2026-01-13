@@ -35,9 +35,11 @@ cargo build --release
 
 ## Usage with Claude Code CLI
 
-Claude Code requires plugins to wrap MCP servers. Follow these steps:
+Claude Code requires plugins to wrap MCP servers. This repository includes the necessary plugin manifests in the `claude-code-plugin/` directory.
 
-### 1. Build the Server
+### Installation Steps
+
+1. **Clone and build:**
 
 ```bash
 git clone https://github.com/kneiht/leptos-mcp-server.git
@@ -45,92 +47,44 @@ cd leptos-mcp-server
 cargo build --release
 ```
 
-### 2. Create Plugin Structure
+2. **Configure the binary path:**
+
+Edit `claude-code-plugin/plugin/.mcp.json` and update the path to point to your built binary:
 
 ```bash
-mkdir -p ~/.claude-plugins/leptos-marketplace/plugin/.claude-plugin
+# Example: Change this
+/ABSOLUTE/PATH/TO/leptos-mcp-server/target/release/leptos-mcp-server
+
+# To your actual path (use pwd to get current directory)
+/Users/yourusername/leptos-mcp-server/target/release/leptos-mcp-server
 ```
 
-### 3. Create Plugin Manifest
-
-Create `~/.claude-plugins/leptos-marketplace/plugin/.claude-plugin/plugin.json`:
-
-```json
-{
-  "name": "leptos-mcp",
-  "description": "Leptos documentation and code analysis tools via MCP",
-  "author": {
-    "name": "kneiht",
-    "url": "https://github.com/kneiht/leptos-mcp-server"
-  }
-}
-```
-
-### 4. Create MCP Configuration
-
-Create `~/.claude-plugins/leptos-marketplace/plugin/.mcp.json`:
-
-```json
-{
-  "leptos": {
-    "command": "/Users/YOUR_USERNAME/leptos-mcp-server/target/release/leptos-mcp-server"
-  }
-}
-```
-
-**Important:** Replace `/Users/YOUR_USERNAME/` with the actual path to your clone.
-
-### 5. Create Marketplace Manifest
-
-Create `~/.claude-plugins/leptos-marketplace/.claude-plugin/marketplace.json`:
-
-```json
-{
-  "name": "local-leptos",
-  "description": "Local marketplace for Leptos MCP server",
-  "owner": {
-    "name": "Local User"
-  },
-  "plugins": [
-    {
-      "name": "leptos-mcp",
-      "description": "Leptos documentation and code analysis tools via MCP",
-      "version": "1.0.0",
-      "author": {
-        "name": "kneiht",
-        "url": "https://github.com/kneiht/leptos-mcp-server"
-      },
-      "source": "./plugin",
-      "category": "development"
-    }
-  ]
-}
-```
-
-### 6. Install Plugin
+3. **Add marketplace and install:**
 
 ```bash
 # Add the marketplace
-claude plugin marketplace add ~/.claude-plugins/leptos-marketplace
+claude plugin marketplace add ./claude-code-plugin
 
 # Install the plugin
-claude plugin install leptos-mcp@local-leptos
+claude plugin install leptos-mcp@leptos-mcp-server
 ```
 
-### 7. Verify Installation
+4. **Verify installation:**
 
 ```bash
 claude mcp list
 # Should show: plugin:leptos-mcp:leptos: ... - ✓ Connected
 ```
 
-### Tool Access
+### Available Tools
 
-Tools will be available with the prefix `mcp__plugin_leptos-mcp_leptos__`:
+Tools are accessible with the `mcp__plugin_leptos-mcp_leptos__` prefix:
 
-- `mcp__plugin_leptos-mcp_leptos__list-sections`
-- `mcp__plugin_leptos-mcp_leptos__get-documentation`
-- `mcp__plugin_leptos-mcp_leptos__leptos-autofixer`
+- `list-sections` - List all Leptos documentation sections
+- `get-documentation` - Retrieve specific documentation by section
+- `leptos-autofixer` - Analyze and suggest fixes for Leptos code
+
+See `claude-code-plugin/README.md` for more details.
 
 ## Usage with Claude Desktop / Antigravity
 

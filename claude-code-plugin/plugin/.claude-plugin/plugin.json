@@ -1,0 +1,8 @@
+{
+  "name": "leptos-mcp",
+  "description": "Leptos documentation and code analysis tools via MCP",
+  "author": {
+    "name": "kneiht",
+    "url": "https://github.com/kneiht/leptos-mcp-server"
+  }
+}
